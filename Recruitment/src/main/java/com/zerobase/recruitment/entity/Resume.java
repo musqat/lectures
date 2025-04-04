@@ -15,7 +15,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Resume {
 
   @Id
@@ -43,6 +47,19 @@ public class Resume {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
+
+  @Builder
+  Resume(
+      String title,
+      List<Education> educationList
+  ){
+    this.title = title;
+    this.educationList = educationList;
+  }
+
+  public void open(){
+    this.status = ResumeStatus.OPEN;
+  }
 
 
 }
