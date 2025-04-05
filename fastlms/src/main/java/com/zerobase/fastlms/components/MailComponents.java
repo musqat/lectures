@@ -17,7 +17,7 @@ public class MailComponents {
 
   public void sendMailTest() {
     SimpleMailMessage msg = new SimpleMailMessage();
-    msg.setTo("hjs90561@naver.com");
+    msg.setTo("");
     msg.setSubject("안녕하세요");
     msg.setText("반갑습니다.");
 
