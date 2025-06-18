@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+cards:
+  message: "Welcome to Bank cards related prod ApIs"
+  contactDetails:
+    name: "Reine Lee - Product Owner"
+    email: "Lee@example.com"
+  onCallSupport:
+    -(453)876-6564
+    -(213)345-3568

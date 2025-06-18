@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Bank Accounts related prod ApIs"
+  contactDetails:
+    name: "Reine king - Product Owner"
+    email: "king@example.com"
+  onCallSupport:
+    -(453)876-6564
+    -(213)345-3568
