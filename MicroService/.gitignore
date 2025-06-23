@@ -1,0 +1,26 @@
+# === Build output ===
+**/target/
+**/build/
+
+# === IntelliJ IDEA ===
+**/*.iml
+**/.idea/
+
+# === Logs and environment ===
+*.log
+.env
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Gradle ===
+.gradle/
+.gradle-cache/
+
+# === Editor-based HTTP Client requests ===
+**/shelf/
+**/workspace.xml
+**/httpRequests/
+**/dataSources/
+**/dataSources.local.xml
