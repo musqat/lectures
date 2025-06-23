@@ -1,0 +1,11 @@
+build:
+  version: "2.0"
+
+accounts:
+  message: "Welcome to Bank Accounts related QA ApIs"
+  contactDetails:
+    name: "Smith Ray - QA Lead"
+    email: "smith@example.com"
+  onCallSupport:
+    -(666)264-1234
+    -(666)234-6754
