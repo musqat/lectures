@@ -1,0 +1,11 @@
+build:
+  version: "3.2"
+
+cards:
+  message: "Welcome to Bank cards related local ApIs"
+  contactDetails:
+    name: "jane Doe - Developer"
+    email: "jane@example.com"
+  onCallSupport:
+    -(555)555-1234
+    -(523)555-1345
