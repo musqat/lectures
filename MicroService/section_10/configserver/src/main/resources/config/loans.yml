@@ -1,0 +1,11 @@
+build:
+  version: "3.2"
+
+loans:
+  message: "Welcome to Bank loans related local ApIs"
+  contactDetails:
+    name: "jane Kim - Developer"
+    email: "jane@example.com"
+  onCallSupport:
+    -(555)555-1234
+    -(523)555-1345
