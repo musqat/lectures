@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Bank Accounts related prod ApIs"
+  contactDetails:
+    name: "Reine king - Product Owner"
+    email: "{cipher}7764d0bce10fd9ef7e0cd511511dac2669ee751d64d14aae7a9708b8480e2cb144786e6b3b4a7710c171d60a80ef1608"
+  onCallSupport:
+    -(453)876-6564
+    -(213)345-3568
