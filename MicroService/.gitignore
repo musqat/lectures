@@ -9,6 +9,7 @@
 # === Logs and environment ===
 *.log
 .env
+**/.data/
 
 # === OS Files ===
 .DS_Store
