@@ -1,0 +1,6 @@
+dependencies:
+- name: muscathan-common
+  repository: file://../../muscathan-common
+  version: 0.1.0
+digest: sha256:1511cf680447ec51dd00cfafc0a2e7d0c15bb1451290dc5df0c914ee9898cb87
+generated: "2025-07-08T23:09:38.4603982+09:00"

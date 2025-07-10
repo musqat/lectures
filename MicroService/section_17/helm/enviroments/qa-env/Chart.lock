@@ -1,0 +1,24 @@
+dependencies:
+- name: muscathan-common
+  repository: file://../../muscathan-common
+  version: 0.1.0
+- name: configserver
+  repository: file://../../muscathan-services/configserver
+  version: 0.1.0
+- name: accounts
+  repository: file://../../muscathan-services/accounts
+  version: 0.1.0
+- name: cards
+  repository: file://../../muscathan-services/cards
+  version: 0.1.0
+- name: loans
+  repository: file://../../muscathan-services/loans
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../muscathan-services/gatewayserver
+  version: 0.1.0
+- name: message
+  repository: file://../../muscathan-services/message
+  version: 0.1.0
+digest: sha256:a93c4306460c4d9b077f955abdabff3ab23273e9fd29c75f0d7e7770449a8c15
+generated: "2025-07-11T01:46:35.6252718+09:00"
