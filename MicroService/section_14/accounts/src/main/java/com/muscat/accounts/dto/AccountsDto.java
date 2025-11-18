@@ -11,7 +11,6 @@ import lombok.Data;
     name = "Accounts",
     description = "Schema to hold Account information"
 )
-
 public class AccountsDto {
 
   @NotEmpty(message = "AccountNumber can not be a null or empty")
