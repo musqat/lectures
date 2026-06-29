@@ -18,5 +18,7 @@
 | **Account** | 계좌 생성, 거래, 해지 등을 포함한 계좌/트랜잭션 처리 API | [바로가기](./Account/README.md) |
 | **fastlms** | 학습 관리 시스템(LMS) 기능을 구현한 웹 기반 실습 | [바로가기](./fastlms/README.md) |
 | **MicroService** | Spring Boot 기반 마이크로서비스 아키텍처 실습 (Kubernetes, Kafka, Helm 등) | [바로가기](./MicroService/README.md) |
+| **LangChain-Udemy-Course** | LangChain 기반 LLM 앱 실습 (RAG, Agents, LangSmith, LCEL, k8s 배포) | [바로가기](./LangChain-Udemy-Course/README.md) |
+| **learn-nextjs14** | Next.js 14 App Router 영화 앱 실습 | [바로가기](./learn-nextjs14/README.md) |
 
 ---
