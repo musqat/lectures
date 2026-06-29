@@ -1,0 +1,9 @@
+.env
+.vscode
+.idea
+udemycourse
+test.ipynb
+.venv
+
+# Local k8s secrets — contains real API keys, never commit
+12_MicroServiceArchitecture/secrets.yaml
