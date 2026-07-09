@@ -20,5 +20,6 @@
 | **MicroService** | Spring Boot 기반 마이크로서비스 아키텍처 실습 (Kubernetes, Kafka, Helm 등) | [바로가기](./MicroService/README.md) |
 | **LangChain-Udemy-Course** | LangChain 기반 LLM 앱 실습 (RAG, Agents, LangSmith, LCEL, k8s 배포) | [바로가기](./LangChain-Udemy-Course/README.md) |
 | **learn-nextjs14** | Next.js 14 App Router 영화 앱 실습 | [바로가기](./learn-nextjs14/README.md) |
+| **Flutter_Projects** | Flutter & Dart 강의 실습 프로젝트 모음 | [바로가기](./Flutter_Projects/README.md) |
 
 ---
