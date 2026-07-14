@@ -13,3 +13,4 @@
 | **todo_app** | Key, 위젯 리빌드 등 Flutter 내부 동작 실습 | [바로가기](./todo_app/README.md) |
 | **meals_app** | 레시피 탐색/즐겨찾기/필터링 앱 실습 (Riverpod 상태 관리) | [바로가기](./meals_app/README.md) |
 | **shopping_list_app** | Firebase Realtime Database 연동 장보기 목록 앱 실습 (HTTP, Future) | [바로가기](./shopping_list_app/README.md) |
+| **favorite_places_app** | 사진·위치와 함께 장소를 저장하는 앱 실습 (카메라, GPS, 지도, sqflite 로컬 저장) | [바로가기](./favorite_places_app/README.md) |
