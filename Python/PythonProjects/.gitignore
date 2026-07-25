@@ -1,0 +1,11 @@
+# Virtual environments
+.venv/
+venv/
+env/
+fastapienv/
+
+# SQLite DB (로컬 데이터)
+*.db
+
+# 환경변수 (비밀키 등)
+.env
