@@ -6,6 +6,7 @@ FastAPI + SQLAlchemy로 만든 Todo REST API. JWT 인증, 사용자별 할 일 �
 
 - FastAPI — 웹 프레임워크
 - SQLAlchemy — ORM
+- Alembic — DB 마이그레이션
 - SQLite (`todosapp.db`) — DB
 - JWT (`python-jose`) + bcrypt (`passlib`) — 인증/비밀번호 해싱
 
@@ -24,6 +25,9 @@ TodoApp/
 ├── main.py          # 앱 진입점, 라우터 등록, 테이블 생성
 ├── database.py      # DB 엔진, 세션, Base
 ├── models.py        # Users / Todos 테이블 모델
+├── alembic.ini      # Alembic 설정 (DB URL 등)
+├── alembic/         # 마이그레이션 환경
+│   └── versions/    # 마이그레이션 스크립트
 └── routers/
     ├── auth.py      # 회원가입, 로그인, 토큰 발급
     ├── todos.py     # 할 일 CRUD
@@ -74,7 +78,14 @@ TodoApp/
 3. `/docs`의 Authorize 버튼에 토큰 입력.
 4. 이후 요청에서 토큰으로 사용자 식별, 본인 할 일만 접근.
 
+## DB 마이그레이션 (Alembic)
+
+모델(`models.py`)을 바꾼 뒤 기존 DB에 반영할 때 사용. `create_all`은 없는 테이블만 만들고 컬럼 변경은 못 하므로, 스키마 변경은 Alembic으로 처리.
+
+각 스크립트는 `upgrade()` / `downgrade()` 한 쌍으로 구성. DB URL은 `alembic.ini`의 `sqlalchemy.url`에서 설정.
+
 ## 메모
 
 - 관리자 기능은 토큰의 `role`이 admin일 때만 허용.
 - SQLite 파일은 첫 실행 시 자동 생성.
+- 팀 작업 시: 동료가 마이그레이션 push → `git pull` 후 `alembic upgrade head`로 스키마 동기화.
