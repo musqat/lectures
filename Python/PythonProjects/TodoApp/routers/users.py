@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Path
 from starlette import status
-from models import Todos, Users
-from database import SessionLocal
+from ..models import Users
+from ..database import SessionLocal
 from .auth import get_current_user
 from passlib.context import CryptContext
 
@@ -43,7 +43,7 @@ async def change_password(user: user_dependency, db : db_dependency,
 
     if not bcrypt_context.verify(user_verification.password, user_model.hashed_password):
         raise HTTPException(status_code=401, detail='Error on password change')
-    user_model.hashed_password = bcrypt_context.encrypt(user_verification.password)
+    user_model.hashed_password = bcrypt_context.hash(user_verification.new_password)
     db.add(user_model)
     db.commit()
 

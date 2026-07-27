@@ -84,8 +84,26 @@ TodoApp/
 
 각 스크립트는 `upgrade()` / `downgrade()` 한 쌍으로 구성. DB URL은 `alembic.ini`의 `sqlalchemy.url`에서 설정.
 
+## 테스트
+
+`pytest` + FastAPI `TestClient`로 작성. 실제 DB 대신 별도 테스트 DB(`testdb.db`)를 씀.
+
+```bash
+pytest
+```
+
+### 구조
+
+- `test/utils.py` — 테스트 공통 설정. 테스트용 엔진/세션, `override_get_db`(테스트 DB 연결), `override_get_current_user`(인증 우회), 데이터 fixture(`test_user`, `test_todo`).
+- `test/test_*.py` — 라우터별 테스트. 각 파일에서 해당 라우터의 `get_db` / `get_current_user`를 `dependency_overrides`로 교체.
+
+### 핵심 개념
+
+- **의존성 오버라이드** — `app.dependency_overrides[get_db] = override_get_db` 로 실제 DB/인증을 테스트용으로 바꿈. 라우터마다 `get_db`가 따로라 파일별로 해당 라우터 것을 교체해야 함.
+- **fixture** — DB 조회하는 테스트는 `test_user` / `test_todo`를 인자로 받아야 데이터가 삽입됨. 테스트 후 자동 삭제.
+- **async 테스트** — `get_current_user` 등 async 함수 직접 호출 테스트는 `pytest-asyncio` 필요.
+
 ## 메모
 
-- 관리자 기능은 토큰의 `role`이 admin일 때만 허용.
 - SQLite 파일은 첫 실행 시 자동 생성.
 - 팀 작업 시: 동료가 마이그레이션 push → `git pull` 후 `alembic upgrade head`로 스키마 동기화.
