@@ -1,6 +1,6 @@
 # TodoApp
 
-FastAPI + SQLAlchemy로 만든 Todo REST API. JWT 인증, 사용자별 할 일 관리, 역할 기반 관리자 기능 포함.
+FastAPI + SQLAlchemy로 만든 Todo 웹앱. JWT 인증, 사용자별 할 일 관리, 역할 기반 관리자 기능, Jinja2 기반 프론트엔드 페이지 포함.
 
 ## 스택
 
@@ -9,39 +9,59 @@ FastAPI + SQLAlchemy로 만든 Todo REST API. JWT 인증, 사용자별 할 일 �
 - Alembic — DB 마이그레이션
 - SQLite (`todosapp.db`) — DB
 - JWT (`python-jose`) + bcrypt (`passlib`) — 인증/비밀번호 해싱
+- Jinja2 + Bootstrap — 서버 렌더링 프론트엔드
+- pytest — 테스트
 
 ## 실행
 
+상대 import(`from .models`)를 쓰므로 **상위 폴더(`PythonProjects`)에서 패키지로 실행**한다.
+
 ```bash
-uvicorn main:app --reload
+uvicorn TodoApp.main:app --reload
 ```
 
-문서: http://127.0.0.1:8000/docs
+- 웹: http://127.0.0.1:8000/ (→ `/todos/todo-page` 리다이렉트)
+- API 문서: http://127.0.0.1:8000/docs
 
 ## 구조
 
 ```
 TodoApp/
-├── main.py          # 앱 진입점, 라우터 등록, 테이블 생성
+├── main.py          # 앱 진입점, 라우터 등록, static 마운트, 테이블 생성
 ├── database.py      # DB 엔진, 세션, Base
 ├── models.py        # Users / Todos 테이블 모델
 ├── alembic.ini      # Alembic 설정 (DB URL 등)
-├── alembic/         # 마이그레이션 환경
-│   └── versions/    # 마이그레이션 스크립트
-└── routers/
-    ├── auth.py      # 회원가입, 로그인, 토큰 발급
-    ├── todos.py     # 할 일 CRUD
-    ├── users.py     # 내 정보, 비밀번호/전화번호 변경
-    └── admin.py     # 관리자 전용 (전체 조회/삭제)
+├── alembic/         # 마이그레이션 환경 (versions/에 스크립트)
+├── routers/
+│   ├── auth.py      # 회원가입, 로그인, 토큰 발급 + 로그인/가입 페이지
+│   ├── todos.py     # 할 일 CRUD + 할 일 페이지
+│   ├── users.py     # 내 정보, 비밀번호/전화번호 변경
+│   └── admin.py     # 관리자 전용 (전체 조회/삭제)
+├── templates/       # Jinja2 페이지 (layout 상속 구조)
+├── static/          # css / js (base.js가 폼 제출을 fetch로 처리)
+└── test/            # pytest 테스트
 ```
 
 ## 모델
 
 **Users** — id, email, username, first_name, last_name, hashed_password, is_active, role, phone_number
 
-**Todos** — id, title, description, priority, completed, owner_id (→ users.id)
+**Todos** — id, title, description, priority, complete, owner_id (→ users.id)
 
-## 엔드포인트
+## 페이지 (Jinja2)
+
+| 경로 | 설명 |
+|---|---|
+| `/` | `/todos/todo-page`로 리다이렉트 |
+| `/auth/login-page` | 로그인 |
+| `/auth/register-page` | 회원가입 |
+| `/todos/todo-page` | 내 할 일 목록 |
+| `/todos/add-todo-page` | 할 일 추가 |
+| `/todos/edit-todo-page/{todo_id}` | 할 일 수정 |
+
+페이지 인증은 **쿠키의 JWT**(`access_token`)로 확인. 토큰 없으면 로그인 페이지로 리다이렉트.
+
+## API 엔드포인트
 
 ### auth (`/auth`)
 | 메서드 | 경로 | 설명 |
@@ -49,14 +69,14 @@ TodoApp/
 | POST | `/auth/` | 회원가입 |
 | POST | `/auth/token` | 로그인, JWT 발급 |
 
-### todos
+### todos (`/todos`)
 | 메서드 | 경로 | 설명 |
 |---|---|---|
-| GET | `/` | 내 할 일 전체 조회 |
-| GET | `/todos/{todo_id}` | 할 일 단건 조회 |
-| POST | `/todo` | 할 일 추가 |
-| PUT | `/todo/{todo_id}` | 할 일 수정 |
-| DELETE | `/todo/{todo_id}` | 할 일 삭제 |
+| GET | `/todos/` | 내 할 일 전체 조회 |
+| GET | `/todos/todo/{todo_id}` | 단건 조회 |
+| POST | `/todos/todo` | 추가 |
+| PUT | `/todos/todo/{todo_id}` | 수정 |
+| DELETE | `/todos/todo/{todo_id}` | 삭제 |
 
 ### users (`/user`)
 | 메서드 | 경로 | 설명 |
@@ -71,12 +91,12 @@ TodoApp/
 | GET | `/admin/todo` | 전체 할 일 조회 (관리자) |
 | DELETE | `/admin/todo/{todo_id}` | 할 일 삭제 (관리자) |
 
+모든 todos/users/admin 엔드포인트는 인증 필요. 본인 소유 할 일만 접근하며, admin은 role이 admin일 때만 허용.
+
 ## 인증 흐름
 
-1. `POST /auth/` 로 가입.
-2. `POST /auth/token` 으로 로그인 → JWT 받음.
-3. `/docs`의 Authorize 버튼에 토큰 입력.
-4. 이후 요청에서 토큰으로 사용자 식별, 본인 할 일만 접근.
+- **웹 페이지** — 로그인 시 받은 JWT를 쿠키에 저장. 페이지 요청마다 쿠키에서 읽어 사용자 식별.
+- **API 직접 호출** — `POST /auth/token`으로 토큰 받아 `Authorization: Bearer <token>` 헤더로 전달. `/docs`에선 Authorize 버튼에 입력.
 
 ## DB 마이그레이션 (Alembic)
 
